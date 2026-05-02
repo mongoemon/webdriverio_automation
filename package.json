@@ -1,0 +1,42 @@
+{
+  "name": "mobile-webdriverio-automation",
+  "version": "1.0.0",
+  "description": "Mobile test automation for Android and iOS using WebdriverIO + Appium",
+  "private": true,
+  "scripts": {
+    "test:android": "wdio run wdio.android.conf.ts",
+    "test:ios": "wdio run wdio.ios.conf.ts",
+    "test:android:tag": "wdio run wdio.android.conf.ts --cucumberOpts.tagExpression",
+    "test:ios:tag": "wdio run wdio.ios.conf.ts --cucumberOpts.tagExpression",
+    "report": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
+    "report:clean": "rimraf reports/allure-results reports/allure-report",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "@wdio/allure-reporter": "^8.39.0",
+    "@wdio/appium-service": "^8.39.0",
+    "@wdio/cli": "^8.39.0",
+    "@wdio/local-runner": "^8.39.0",
+    "@wdio/mocha-framework": "^8.39.0",
+    "@wdio/spec-reporter": "^8.39.0",
+    "allure-commandline": "^2.30.0",
+    "appium": "^2.11.0",
+    "appium-uiautomator2-driver": "^3.7.0",
+    "appium-xcuitest-driver": "^7.26.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "exceljs": "^4.4.0",
+    "rimraf": "^5.0.10",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5",
+    "webdriverio": "^8.39.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

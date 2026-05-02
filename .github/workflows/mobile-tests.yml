@@ -1,0 +1,107 @@
+name: Mobile Tests
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+    inputs:
+      platform:
+        description: 'Platform to test'
+        required: true
+        default: 'android'
+        type: choice
+        options:
+          - android
+          - ios
+
+jobs:
+  android-tests:
+    name: Android Tests
+    runs-on: macos-latest
+    if: ${{ github.event.inputs.platform == 'android' || github.event.inputs.platform == '' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Start Android Emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: Nexus 6
+          script: echo "Emulator started"
+
+      - name: Install Appium
+        run: |
+          npm install -g appium
+          appium driver install uiautomator2
+
+      - name: Run Android Tests
+        run: npm run test:android
+        env:
+          ANDROID_DEVICE_NAME: emulator-5554
+          ANDROID_PLATFORM_VERSION: '13.0'
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-allure-results
+          path: reports/allure-results/
+
+  ios-tests:
+    name: iOS Tests
+    runs-on: macos-latest
+    if: ${{ github.event.inputs.platform == 'ios' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Appium
+        run: |
+          npm install -g appium
+          appium driver install xcuitest
+
+      - name: Boot iOS Simulator
+        run: |
+          xcrun simctl boot "iPhone 15" || true
+          xcrun simctl bootstatus "iPhone 15" -b
+
+      - name: Run iOS Tests
+        run: npm run test:ios
+        env:
+          IOS_DEVICE_NAME: 'iPhone 15'
+          IOS_PLATFORM_VERSION: '17.0'
+
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-allure-results
+          path: reports/allure-results/

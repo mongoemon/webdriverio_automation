@@ -1,0 +1,10 @@
+# Normalize line endings for all text files
+* text=auto eol=lf
+
+# Explicitly declare binary files so git never tries to diff/merge them
+*.apk binary
+*.ipa binary
+*.app binary
+*.png binary
+*.jpg binary
+*.xlsx binary

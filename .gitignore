@@ -1,0 +1,39 @@
+# ── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Build output ──────────────────────────────────────────────────────────────
+build/
+dist/
+
+# ── Environment / secrets ─────────────────────────────────────────────────────
+.env
+# Keep the template so new contributors know what variables are needed
+!.env.example
+
+# ── App binaries (large files — download separately) ─────────────────────────
+apps/**/*.apk
+apps/**/*.ipa
+apps/**/*.app
+# Keep folder structure and placeholder
+!apps/**/.gitkeep
+
+# ── Test reports & artifacts ──────────────────────────────────────────────────
+reports/allure-results/
+reports/allure-report/
+reports/screenshots/
+reports/*.log
+reports/*.png
+reports/*.xml
+
+# ── OS / editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+*.suo
+*.user
+.vscode/settings.json
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
