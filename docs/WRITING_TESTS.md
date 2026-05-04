@@ -211,13 +211,13 @@ it.only('should allow login after a failed attempt', async () => {
 });
 ```
 
-```powershell
+```bash
 npm run test:android
 ```
 
 ### Step 4 — Remove `.only` and run the full suite
 
-```powershell
+```bash
 npm run test:android
 ```
 
@@ -332,7 +332,7 @@ describe('Android - Product Detail', () => {
 
 ### Step 4 — Verify selectors and run
 
-```powershell
+```bash
 npm run test:android
 ```
 

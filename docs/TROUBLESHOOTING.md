@@ -59,7 +59,7 @@ so the error is silently swallowed and the test run continues normally.
 ### `Error: 'uiautomator2' driver is not installed`
 
 **Fix:**
-```powershell
+```bash
 appium driver install uiautomator2
 ```
 
@@ -69,11 +69,20 @@ appium driver install uiautomator2
 
 Another Appium process is running.
 
+**Windows:**
 ```powershell
-# Find and kill the process using port 4723:
+# Find the PID using port 4723:
 netstat -ano | findstr :4723
-# Note the PID (last column), then:
+# Kill it (replace <PID> with the number from the last column):
 taskkill /PID <PID> /F
+```
+
+**macOS / Linux:**
+```bash
+# Find the PID:
+lsof -ti :4723
+# Kill it:
+kill -9 $(lsof -ti :4723)
 ```
 
 ---
@@ -87,7 +96,7 @@ taskkill /PID <PID> /F
 2. Run `adb devices` — does it show `emulator-5554   device`?
 3. If it shows `offline`, restart the emulator
 
-```powershell
+```bash
 adb kill-server
 adb start-server
 adb devices
@@ -97,7 +106,7 @@ adb devices
 
 ### `ANDROID_HOME is not set`
 
-**Fix — Windows (PowerShell, run once):**
+**Windows (PowerShell, run once):**
 ```powershell
 [System.Environment]::SetEnvironmentVariable(
   "ANDROID_HOME",
@@ -105,6 +114,12 @@ adb devices
   "User"
 )
 # Restart PowerShell after this
+```
+
+**macOS (add to `~/.zshrc` or `~/.bash_profile`, then `source` it):**
+```bash
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
 ```
 
 ---
@@ -121,7 +136,7 @@ adb devices
 
 The app is already installed but with a different signature (e.g. a different build).
 
-```powershell
+```bash
 adb uninstall com.saucelabs.mydemoapp.android
 ```
 
@@ -269,10 +284,16 @@ adb shell pm clear com.saucelabs.mydemoapp.android
 
 The path in `.env` is wrong or the file doesn't exist.
 
+**Windows:**
 ```powershell
-# Verify the file exists:
 Test-Path "d:\work\mobile\webdriverio_automation\apps\android\mda-2.2.0-25.apk"
 # Should print: True
+```
+
+**macOS / Linux:**
+```bash
+ls -lh apps/android/mda-2.2.0-25.apk
+# Should print the file size — if it says "No such file", the APK is missing
 ```
 
 Check your `.env`:
@@ -337,7 +358,7 @@ The WebdriverIO global types aren't loaded.
 ```
 
 Then run:
-```powershell
+```bash
 npm run type-check
 ```
 
@@ -347,13 +368,21 @@ npm run type-check
 
 A package isn't installed.
 
-```powershell
+```bash
 npm install
 ```
 
 If still failing, delete `node_modules` and reinstall:
+
+**Windows:**
 ```powershell
 Remove-Item -Recurse -Force node_modules
+npm install
+```
+
+**macOS / Linux:**
+```bash
+rm -rf node_modules
 npm install
 ```
 

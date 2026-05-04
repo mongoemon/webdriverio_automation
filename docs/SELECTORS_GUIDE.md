@@ -75,10 +75,14 @@ Choose:
 
 **Step 1 — Start your emulator/simulator**
 
-Android:
+Android — Windows:
 ```powershell
-# Start emulator (replace AVD name with yours)
-$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Pixel_6_API_33
+$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Pixel_7_API_36
+```
+
+Android — macOS:
+```bash
+$ANDROID_HOME/emulator/emulator -avd Pixel_7_API_36
 ```
 
 iOS:
@@ -115,7 +119,8 @@ Click the JSON edit icon and paste the appropriate capabilities:
   "appium:automationName": "UiAutomator2",
   "appium:deviceName": "emulator-5554",
   "appium:platformVersion": "16.0",
-  "appium:app": "C:\\work\\mobile\\webdriverio_automation\\apps\\android\\mda-2.2.0-25.apk",
+  "appium:app": "C:\\work\\mobile\\webdriverio_automation\\apps\\android\\mda-2.2.0-25.apk",  // Windows
+  // "appium:app": "/Users/yourname/work/mobile/webdriverio_automation/apps/android/mda-2.2.0-25.apk",  // macOS
   "appium:appPackage": "com.saucelabs.mydemoapp.android",
   "appium:appActivity": "com.saucelabs.mydemoapp.android.view.activities.SplashActivity",
   "appium:noReset": true

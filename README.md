@@ -93,10 +93,12 @@ Android Emulator / iOS Simulator / Real Device
 2. Run the installer and follow the prompts
 3. Verify it worked:
 
-```powershell
+```bash
 node --version   # should print v18.x.x or higher
 npm --version    # should print 9.x.x or higher
 ```
+
+> These commands work the same on Windows (PowerShell), macOS, and Linux.
 
 ---
 
@@ -110,11 +112,25 @@ Appium's Android driver requires Java.
 
 **Windows (PowerShell — run as Administrator):**
 ```powershell
-[System.Environment]::SetEnvironmentVariable("JAVA_HOME", "C:\Program Files\Eclipse Adoptium\jdk-17.x.x-hotspot", "Machine")
+[System.Environment]::SetEnvironmentVariable(
+  "JAVA_HOME",
+  "C:\Program Files\Eclipse Adoptium\jdk-17.x.x-hotspot",
+  "Machine"
+)
+# Restart PowerShell after running this
+```
+
+**macOS (add to `~/.zshrc` or `~/.bash_profile`):**
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home -v 17)
+```
+Then reload your shell:
+```bash
+source ~/.zshrc
 ```
 
 4. Verify:
-```powershell
+```bash
 java --version   # should print openjdk 17.x.x or similar
 ```
 
@@ -138,15 +154,24 @@ Android Studio provides the Android SDK (tools to build and run Android apps) an
 
 6. Set environment variables:
 
-**Windows:**
+**Windows (add to PowerShell profile or System Environment Variables):**
 ```powershell
-# Add to your PowerShell profile or set as system variables:
 $env:ANDROID_HOME = "$env:LOCALAPPDATA\Android\Sdk"
 $env:PATH = "$env:PATH;$env:ANDROID_HOME\platform-tools;$env:ANDROID_HOME\emulator"
 ```
 
+**macOS (add to `~/.zshrc` or `~/.bash_profile`):**
+```bash
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$PATH:$ANDROID_HOME/platform-tools:$ANDROID_HOME/emulator"
+```
+Then reload:
+```bash
+source ~/.zshrc
+```
+
 7. Verify:
-```powershell
+```bash
 adb --version   # should print Android Debug Bridge version
 ```
 
@@ -183,14 +208,16 @@ xcrun simctl list devices   # lists all available simulators
 
 Appium is the server that bridges WebdriverIO and your device. Install it globally:
 
-```powershell
+```bash
 npm install -g appium
 ```
 
 Verify:
-```powershell
+```bash
 appium --version   # should print 2.x.x
 ```
+
+> Works the same on Windows, macOS, and Linux.
 
 ---
 
@@ -199,7 +226,7 @@ appium --version   # should print 2.x.x
 Appium 2 uses a plugin system. You must install the driver for each platform you want to test.
 
 **Android:**
-```powershell
+```bash
 appium driver install uiautomator2
 ```
 
@@ -226,8 +253,15 @@ Expected output:
 
 Navigate to the project folder and install Node packages:
 
+**Windows:**
 ```powershell
 cd d:\work\mobile\webdriverio_automation
+npm install
+```
+
+**macOS / Linux:**
+```bash
+cd ~/work/mobile/webdriverio_automation
 npm install
 ```
 
@@ -359,6 +393,8 @@ Before running tests, an emulator must be running.
 3. Click the Play (▶) button next to your AVD
 
 **Option B — Command line:**
+
+Windows:
 ```powershell
 # List available AVDs
 $env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -list-avds
@@ -367,8 +403,17 @@ $env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -list-avds
 $env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Pixel_7_API_36
 ```
 
+macOS:
+```bash
+# List available AVDs
+$ANDROID_HOME/emulator/emulator -list-avds
+
+# Start one
+$ANDROID_HOME/emulator/emulator -avd Pixel_7_API_36
+```
+
 Wait until the emulator fully boots (home screen is visible), then verify:
-```powershell
+```bash
 adb devices
 # Output: emulator-5554   device
 ```
@@ -377,7 +422,7 @@ adb devices
 
 ### Run Android tests
 
-```powershell
+```bash
 npm run test:android
 ```
 
@@ -428,7 +473,7 @@ npm run test:ios
 
 After running tests, generate and open the HTML report:
 
-```powershell
+```bash
 npm run report
 ```
 
@@ -439,15 +484,17 @@ This opens a browser with a detailed Allure report showing:
 - Test duration
 
 To clean old reports before a new run:
-```powershell
+```bash
 npm run report:clean
 ```
+
+> All `npm run` commands work the same on Windows, macOS, and Linux.
 
 ### Generate the test case spreadsheet
 
 A pre-built spreadsheet (`docs/test-cases.xlsx`) documents every test case with steps, expected results, priority, and automation reference. Regenerate it after adding new specs:
 
-```powershell
+```bash
 node scripts/generate-test-cases.mjs
 ```
 
