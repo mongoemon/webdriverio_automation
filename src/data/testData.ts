@@ -2,7 +2,7 @@ import type { TestUser } from '../types';
 
 // Credentials shown in the app's login screen
 export const validUser: TestUser = {
-  email: 'bod@example.com',
+  email: 'bob@example.com',
   password: '10203040',
 };
 

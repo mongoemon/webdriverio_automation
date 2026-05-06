@@ -28,7 +28,7 @@ export const config: Options.Testrunner = {
       'appium:noReset': false,
       'appium:fullReset': false,
       'appium:newCommandTimeout': 240,
-      'appium:autoAcceptAlerts': true,
+      'appium:autoAcceptAlerts': false,
       'appium:reduceMotion': true,
       'appium:useNewWDA': false,
     },

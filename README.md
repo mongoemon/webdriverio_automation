@@ -236,7 +236,7 @@ appium driver install xcuitest
 ```
 
 Verify installed drivers:
-```powershell
+```bash
 appium driver list
 ```
 

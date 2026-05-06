@@ -26,8 +26,8 @@ Common errors you'll encounter, what they mean, and how to fix them.
 **Fix:** The project starts Appium automatically via the `@wdio/appium-service`. If you
 see this error, it usually means Appium is not installed globally.
 
-```powershell
-# Check if appium is installed:
+```bash
+# Check if appium is installed (works on Windows PowerShell, macOS, and Linux):
 appium --version
 
 # If not found:
@@ -191,9 +191,17 @@ const element = await this.waitForElement('~test-LOGIN', { timeout: 30000 });
 
 The element was found but couldn't be tapped (covered by another element, disabled, or not fully visible).
 
+**Windows (PowerShell):**
 ```powershell
-# Check what's covering it:
-adb exec-out uiautomator dump /dev/tty | grep -i "enabled=\"false\""
+# Dump the UI tree to a file, then open it and search for enabled="false"
+adb shell uiautomator dump /sdcard/dump.xml
+adb pull /sdcard/dump.xml dump.xml
+# Open dump.xml in a text editor and search for enabled="false"
+```
+
+**macOS / Linux:**
+```bash
+adb exec-out uiautomator dump /dev/tty | grep -i 'enabled="false"'
 ```
 
 Or use `scrollIntoView()` before tapping:
@@ -227,7 +235,16 @@ async logout(): Promise<void> {
 ```
 
 If the button text is different in your app, dump the live UI to confirm:
+
+**Windows (PowerShell):**
 ```powershell
+adb shell uiautomator dump /sdcard/dump.xml
+adb pull /sdcard/dump.xml dump.xml
+# Open dump.xml and search for class="android.widget.Button"
+```
+
+**macOS / Linux:**
+```bash
 adb exec-out uiautomator dump /dev/tty
 # Search the output for <node ... class="android.widget.Button" ...>
 ```
@@ -256,8 +273,9 @@ await this.tapElement('~test-LOGIN');  // waitForElement + click in one call
 
 ### `Could not find a connected Android device`
 
-```powershell
+```bash
 adb devices   # must show "device" not "offline" or "unauthorized"
+# Works the same on Windows (PowerShell/cmd) and macOS
 ```
 
 If it shows `unauthorized`:
@@ -271,8 +289,8 @@ If it shows `unauthorized`:
 The emulator doesn't have enough space.
 
 **Fix:**
-```powershell
-# Clear app data
+```bash
+# Clear app data (works on Windows PowerShell/cmd and macOS):
 adb shell pm clear com.saucelabs.mydemoapp.android
 
 # Or wipe and reset the emulator from Android Studio → AVD Manager → Wipe Data

@@ -183,7 +183,16 @@ If you don't want to install Appium Inspector, you can dump the UI to XML using 
 **Step 1 — Start emulator and app, navigate to the screen you want to inspect**
 
 **Step 2 — Dump the UI hierarchy**
+
+**Windows (PowerShell):**
 ```powershell
+adb shell uiautomator dump /sdcard/dump.xml
+adb pull /sdcard/dump.xml dump.xml
+# Open dump.xml in a text editor and search for your element's text or resource-id
+```
+
+**macOS / Linux:**
+```bash
 adb exec-out uiautomator dump /dev/tty
 ```
 
