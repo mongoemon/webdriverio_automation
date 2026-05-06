@@ -77,7 +77,7 @@ Choose:
 
 Android — Windows:
 ```powershell
-$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Pixel_7_API_36
+& "$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe" -avd Pixel_7_API_36
 ```
 
 Android — macOS:

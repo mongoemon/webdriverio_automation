@@ -397,10 +397,10 @@ Before running tests, an emulator must be running.
 Windows:
 ```powershell
 # List available AVDs
-$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -list-avds
+& "$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe" -list-avds
 
 # Start one (replace "Pixel_7_API_36" with your AVD name)
-$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe -avd Pixel_7_API_36
+& "$env:LOCALAPPDATA\Android\Sdk\emulator\emulator.exe" -avd Pixel_7_API_36
 ```
 
 macOS:
